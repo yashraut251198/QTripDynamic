@@ -1,8 +1,8 @@
 __CRIO__/metadata.json merge=copy-merge
-frontend/__tests__/module/landing_page.test.js merge=copy-merge
-frontend/__tests__/module/adventures_page.test.js merge=copy-merge
-frontend/__tests__/module/adventure_details_page.test.js merge=copy-merge
-frontend/__tests__/module/reservation_page.test.js merge=copy-merge
+frontend/__tests__/modules/landing_page.test.js merge=copy-merge
+frontend/__tests__/modules/adventures_page.test.js merge=copy-merge
+frontend/__tests__/modules/adventure_details_page.test.js merge=copy-merge
+frontend/__tests__/modules/reservation_page.test.js merge=copy-merge
 frontend/__tests__/pnpm-lock.yaml
 frontend/__tests__/package-lock.json
 frontend/__tests__/package.json
