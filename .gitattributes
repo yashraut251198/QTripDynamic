@@ -3,9 +3,11 @@ frontend/__tests__/modules/landing_page.test.js merge=copy-merge
 frontend/__tests__/modules/adventures_page.test.js merge=copy-merge
 frontend/__tests__/modules/adventure_details_page.test.js merge=copy-merge
 frontend/__tests__/modules/reservation_page.test.js merge=copy-merge
-frontend/__tests__/pnpm-lock.yaml
-frontend/__tests__/package-lock.json
-frontend/__tests__/package.json
-backend/pnpm-lock.yaml
-backend/package-lock.json
-backend/package.json
+frontend/__tests__/pnpm-lock.yaml merge=ours
+frontend/__tests__/package-lock.json merge=ours
+frontend/__tests__/package.json merge=copy-merge 
+backend/pnpm-lock.yaml merge=ours
+backend/package-lock.json merge=ours
+backend/package.json merge=copy-merge 
+.gitattributes merge=copy-merge 
+.gitignore merge=copy-merge 
