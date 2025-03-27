@@ -11,3 +11,7 @@ backend/package-lock.json merge=ours
 backend/package.json merge=copy-merge 
 .gitattributes merge=copy-merge 
 .gitignore merge=copy-merge 
+
+# Eliminate merge conflicts where one side is empty
+frontend/modules/** merge=autoselect-nonempty
+frontend/pages/** merge=autoselect-nonempty
