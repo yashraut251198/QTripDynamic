@@ -12,6 +12,13 @@ function getCityFromURL(search) {
 async function fetchAdventures(city) {
   // TODO: MODULE_ADVENTURES
   // 1. Fetch adventures using the Backend API and return the data
+  try {
+    const res = await fetch(config.backendEndpoint + `/adventures?city=${city}`);
+    const data = await res.json();
+    return data;
+  } catch (e) {
+    return null;
+  }
 
 }
 
@@ -19,10 +26,33 @@ async function fetchAdventures(city) {
 function addAdventureToDOM(adventures) {
   // TODO: MODULE_ADVENTURES
   // 1. Populate the Adventure Cards and insert those details into the DOM
-\
+  const container = document.getElementById("data");
+  adventures.forEach(adventure => {
+    const card = document.createElement("div");
+    card.className = 'col-6 col-lg-3 mb-4';
+    card.innerHTML = `
+     <a href="detail/?adventure=${adventure.id}" id=${adventure.id}>
+      <div class="activity-card">
+      <div class="category-banner">${adventure.category}</div>
+       <img src="${adventure.image}" class=""img-responsive>
+       <div class="activity-card-text text-md-center w-100 mt-3">
+        <div class="d-block d-md-flex justify-content-between flex-wrap pl-3 pr-3">
+         <h5 class="text-left">${adventure.name}</h5>
+         <p>${adventure.costPerHead}</p>
+        </div>
+        <div class="d-block d-md-flex justify-content-between flex-wrap pl-3 pr-3">
+         <h5 class="text-left">Duration</h5>
+         <p>${adventure.duration} Hours</p>
+        </div>
+       </div>
+      </div>
+     </a>
+    `
+    container.append(card);
+  });
 }
 
-//Implementation of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.
+//Implementatio n of filtering by duration which takes in a list of adventures, the lower bound and upper bound of duration and returns a filtered list of adventures.
 function filterByDuration(list, low, high) {
   // TODO: MODULE_FILTERS
   // 1. Filter adventures based on Duration and return filtered list
