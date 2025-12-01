@@ -95,7 +95,7 @@ function filterFunction(list, filters) {
 function saveFiltersToLocalStorage(filters) {
   // TODO: MODULE_FILTERS
   // 1. Store the filters as a String to localStorage
-
+  localStorage.setItem("filters", JSON.stringify(filters))
   return true;
 }
 
@@ -103,8 +103,7 @@ function saveFiltersToLocalStorage(filters) {
 function getFiltersFromLocalStorage() {
   // TODO: MODULE_FILTERS
   // 1. Get the filters from localStorage and return String read as an object
-
-
+  return JSON.parse(localStorage.getItem('filters'))
   // Place holder for functionality to work in the Stubs
   return null;
 }

@@ -138,6 +138,8 @@
 
             // Updates the DOM with filter pills if any
             generateFilterPillsAndUpdateDOM(filters);
+
+            document.getElementById("duration-select").value = filters.duration
         })();
 
 
@@ -154,6 +156,7 @@
 
             let filteredAdventures = filterFunction(adventures, filters);
             addAdventureToDOM(filteredAdventures);
+            saveFiltersToLocalStorage(filters)
         }
 
         //executed when clear button is clicked on duration filter dropdown
@@ -167,6 +170,7 @@
             filters["duration"] = ""
             let filteredAdventures = filterFunction(adventures, filters);
             addAdventureToDOM(filteredAdventures);
+            saveFiltersToLocalStorage(filters)
         }
 
 
@@ -189,6 +193,7 @@
 
             // TODO: MODULE_FILTERS
             // 1. Invoke saveFiltersToLocalStorage here
+            saveFiltersToLocalStorage(filters)
         }
 
         //executed when clear button is clicked on category filter dropdown
@@ -202,6 +207,7 @@
 
             // TODO: MODULE_FILTERS
             // 1. Invoke saveFiltersToLocalStorage here
+            saveFiltersToLocalStorage(filters)
         }
 
         //helper function
