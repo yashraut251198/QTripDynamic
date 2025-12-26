@@ -4,33 +4,84 @@ import config from "../conf/index.js";
 function getAdventureIdFromURL(search) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Get the Adventure Id from the URL
-
+  return new URLSearchParams(search).get("adventure"); 
 
   // Place holder for functionality to work in the Stubs
-  return null;
+  
 }
 //Implementation of fetch call with a paramterized input based on adventure ID
 async function fetchAdventureDetails(adventureId) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Fetch the details of the adventure by making an API call
-
-
-  // Place holder for functionality to work in the Stubs
-  return null;
+  try {
+    let res = await fetch(`${config.backendEndpoint}/adventures/detail?adventure=${adventureId}`);
+    let data = await res.json();
+    return data;
+  } catch (e) {
+    return null;
+  }
+  // Place holder for functionality to work in the Stubs  
 }
 
 //Implementation of DOM manipulation to add adventure details to DOM
 function addAdventureDetailsToDOM(adventure) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the details of the adventure to the HTML DOM
-
+  
+  document.getElementById("adventure-name").textContent = adventure.name;
+  document.getElementById('adventure-subtitle').textContent = adventure.subtitle
+  document.getElementById('adventure-content').textContent = adventure.content  
+  adventure.images.forEach(imgSrc => {
+    let imgNode = document.createElement('img');
+    imgNode.setAttribute('src', imgSrc)
+    imgNode.className = 'activity-card-image pb-3 pb-md-0'
+    document.getElementById('photo-gallery').append(imgNode)
+  });
 }
 
 //Implementation of bootstrap gallery component
 function addBootstrapPhotoGallery(images) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the bootstrap carousel to show the Adventure images
+  document.getElementById('photo-gallery').innerHTML = `<div id="carouselExampleIndicators" class="carousel slide">
+  <div class="carousel-indicators" id="indicators">
+   
+  </div>
+  <div class="carousel-inner" id="slides">
+    
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>`
 
+ let indicatorsNode = document.getElementById('indicators');
+ let slidesNode = document.getElementById('slides');
+
+ images.forEach((imgSrc, i) => {
+  let indicator = document.createElement('button');
+  indicator.setAttribute('type', 'button')
+  indicator.setAttribute('data-bs-target', '#carouselExampleIndicators')
+  indicator.setAttribute('data-bs-slide-to', i)
+  
+  if(i === 0) {
+    indicator.className = 'active';
+  }
+  let slide = document.createElement('div');
+  slide.className = 'carousel-item'
+  if(i === 0){
+    slide.className += ' active';
+  }
+  slide.innerHTML = `<img src="${imgSrc}" class="activity-card-image pb-3 pb-md-0">`
+
+  indicatorsNode.append(indicator);
+  slidesNode.append(slide);
+});
 }
 
 //Implementation of conditional rendering of DOM based on availability
@@ -71,3 +122,4 @@ export {
   calculateReservationCostAndUpdateDOM,
   showBannerIfAlreadyReserved,
 };
+
