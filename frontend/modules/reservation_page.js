@@ -18,37 +18,38 @@ async function fetchReservations() {
 
 //Function to add reservations to the table. Also; in case of no reservations, display the no-reservation-banner, else hide it.
 function addReservationToTable(reservations) {
-  if (reservations.length === 0) {
+
+  if (reservations.length) {
+    document.getElementById("no-reservation-banner").style.display = "none";
+    document.getElementById("reservation-table-parent").style.display = "block";
+  } else {
     document.getElementById("no-reservation-banner").style.display = "block";
     document.getElementById("reservation-table-parent").style.display = "none";
     return;
   }
 
-  document.getElementById("no-reservation-banner").style.display = "none";
-  document.getElementById("reservation-table-parent").style.display = "block";
-
   const table = document.getElementById("reservation-table");
+  table.innerHTML = ""; // important for tests
 
-  reservations.forEach(reservation => {
-    const row = document.createElement("tr");
+  reservations.forEach((reservation) => {
 
     const bookingDate = new Date(reservation.date).toLocaleDateString("en-IN");
 
-    const bookingDateVerbose = new Date(reservation.time).toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "long",
-      year: "numeric"
-    });
+    const bookingTime =
+      new Date(reservation.time).toLocaleDateString("en-IN", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }) +
+      ", " +
+      new Date(reservation.time).toLocaleTimeString("en-IN", {
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: true,
+      });
 
-    const bookingTimeOnly = new Date(reservation.time).toLocaleTimeString("en-IN", {
-      hour: "numeric",
-      minute: "numeric",
-      second: "numeric",
-      hour12: true
-    });
-
-    const bookingTime = `${bookingDateVerbose} , ${bookingTimeOnly}`;
-
+    const row = document.createElement("tr");
 
     row.innerHTML = `
       <td>${reservation.id}</td>
@@ -59,7 +60,13 @@ function addReservationToTable(reservations) {
       <td>${reservation.price}</td>
       <td>${bookingTime}</td>
       <td>
-        <div class="reservation-visit-button" id="${reservation.id}"><a href="../detail/?adventure=${reservation.adventure}">Visit Adventure</a></div>
+        <a
+          id="${reservation.id}"
+          class="reservation-visit-button"
+          href="../detail/?adventure=${reservation.adventure}"
+        >
+          Visit Adventure
+        </a>
       </td>
     `;
 
