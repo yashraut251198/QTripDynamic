@@ -29,7 +29,7 @@ function addReservationToTable(reservations) {
   }
 
   const table = document.getElementById("reservation-table");
-  table.innerHTML = ""; // important for tests
+  table.innerHTML = ""; 
 
   reservations.forEach((reservation) => {
 
@@ -60,14 +60,16 @@ function addReservationToTable(reservations) {
       <td>${reservation.price}</td>
       <td>${bookingTime}</td>
       <td>
+       <div id="${reservation.id}">
         <a
-          id="${reservation.id}"
-          class="reservation-visit-button"
-          href="../detail/?adventure=${reservation.adventure}"
+        class="reservation-visit-button"
+        href="../detail/?adventure=${reservation.adventure}"
         >
-          Visit Adventure
+         Visit Adventure
         </a>
-      </td>
+      </div>
+     </td>
+
     `;
 
     table.appendChild(row);

@@ -87,17 +87,19 @@ function addBootstrapPhotoGallery(images) {
 
 //Implementation of conditional rendering of DOM based on availability
 function conditionalRenderingOfReservationPanel(adventure) {
-  // TODO: MODULE_RESERVATIONS
-  // 1. If the adventure is already reserved, display the sold-out message.
   if (adventure.available) {
     document.getElementById("reservation-panel-sold-out").style.display = "none";
     document.getElementById("reservation-panel-available").style.display = "block";
+
+    
+    document.getElementById("reservation-person-cost").innerHTML =
+      adventure.costPerHead;
   } else {
     document.getElementById("reservation-panel-sold-out").style.display = "block";
     document.getElementById("reservation-panel-available").style.display = "none";
   }
-
 }
+
 
 //Implementation of reservation cost calculation based on persons
 function calculateReservationCostAndUpdateDOM(adventure, persons) {
