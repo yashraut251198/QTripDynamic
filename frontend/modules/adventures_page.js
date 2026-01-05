@@ -29,24 +29,25 @@ function addAdventureToDOM(adventures) {
   const container = document.getElementById("data");
   adventures.forEach(adventure => {
     const card = document.createElement("div");
-    card.className = 'col-6 col-lg-3 mb-4';
-    card.innerHTML = `
-     <a href="detail/?adventure=${adventure.id}" id=${adventure.id}>
-      <div class="activity-card">
+card.className = "col-6 col-lg-3 mb-4 px-2";
+
+card.innerHTML = `
+  <a href="detail/?adventure=${adventure.id}" id="${adventure.id}">
+    <div class="activity-card">
       <div class="category-banner">${adventure.category}</div>
-       <img src="${adventure.image}" class=""img-responsive>
-       <div class="activity-card-text text-md-center w-100 mt-3">
-        <div class="d-block d-md-flex justify-content-between flex-wrap pl-3 pr-3">
-         <h5 class="text-left">${adventure.name}</h5>
-         <p>${adventure.costPerHead}</p>
+      <img src="${adventure.image}" class="img-fluid">
+      <div class="activity-card-text text-md-center w-100 mt-3">
+        <div class="d-flex justify-content-between px-3">
+          <h5>${adventure.name}</h5>
+          <p>${adventure.costPerHead}</p>
         </div>
-        <div class="d-block d-md-flex justify-content-between flex-wrap pl-3 pr-3">
-         <h5 class="text-left">Duration</h5>
-         <p>${adventure.duration} Hours</p>
+        <div class="d-flex justify-content-between px-3">
+          <h5>Duration</h5>
+          <p>${adventure.duration} Hours</p>
         </div>
-       </div>
       </div>
-     </a>
+    </div>
+  </a>
     `
     container.append(card);
   });

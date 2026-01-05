@@ -4,10 +4,10 @@ import config from "../conf/index.js";
 function getAdventureIdFromURL(search) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Get the Adventure Id from the URL
-  return new URLSearchParams(search).get("adventure"); 
+  return new URLSearchParams(search).get("adventure");
 
   // Place holder for functionality to work in the Stubs
-  
+
 }
 //Implementation of fetch call with a paramterized input based on adventure ID
 async function fetchAdventureDetails(adventureId) {
@@ -27,10 +27,11 @@ async function fetchAdventureDetails(adventureId) {
 function addAdventureDetailsToDOM(adventure) {
   // TODO: MODULE_ADVENTURE_DETAILS
   // 1. Add the details of the adventure to the HTML DOM
-  
+
   document.getElementById("adventure-name").textContent = adventure.name;
   document.getElementById('adventure-subtitle').textContent = adventure.subtitle
-  document.getElementById('adventure-content').textContent = adventure.content  
+  document.getElementById('adventure-content').textContent = adventure.content
+  document.getElementById('reservation-person-cost').textContent = adventure.costPerHead;
   adventure.images.forEach(imgSrc => {
     let imgNode = document.createElement('img');
     imgNode.setAttribute('src', imgSrc)
@@ -60,56 +61,91 @@ function addBootstrapPhotoGallery(images) {
   </button>
 </div>`
 
- let indicatorsNode = document.getElementById('indicators');
- let slidesNode = document.getElementById('slides');
+  let indicatorsNode = document.getElementById('indicators');
+  let slidesNode = document.getElementById('slides');
 
- images.forEach((imgSrc, i) => {
-  let indicator = document.createElement('button');
-  indicator.setAttribute('type', 'button')
-  indicator.setAttribute('data-bs-target', '#carouselExampleIndicators')
-  indicator.setAttribute('data-bs-slide-to', i)
-  
-  if(i === 0) {
-    indicator.className = 'active';
-  }
-  let slide = document.createElement('div');
-  slide.className = 'carousel-item'
-  if(i === 0){
-    slide.className += ' active';
-  }
-  slide.innerHTML = `<img src="${imgSrc}" class="activity-card-image pb-3 pb-md-0">`
+  images.forEach((imgSrc, i) => {
+    let indicator = document.createElement('button');
+    indicator.setAttribute('type', 'button')
+    indicator.setAttribute('data-bs-target', '#carouselExampleIndicators')
+    indicator.setAttribute('data-bs-slide-to', i)
 
-  indicatorsNode.append(indicator);
-  slidesNode.append(slide);
-});
+    if (i === 0) {
+      indicator.className = 'active';
+    }
+    let slide = document.createElement('div');
+    slide.className = 'carousel-item'
+    if (i === 0) {
+      slide.className += ' active';
+    }
+    slide.innerHTML = `<img src="${imgSrc}" class="activity-card-image pb-3 pb-md-0">`
+
+    indicatorsNode.append(indicator);
+    slidesNode.append(slide);
+  });
 }
 
 //Implementation of conditional rendering of DOM based on availability
 function conditionalRenderingOfReservationPanel(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. If the adventure is already reserved, display the sold-out message.
-
+  if (adventure.available) {
+    document.getElementById('reservation-panel-sold-out').style.display = 'none';
+    document.getElementById('reservation-panel-available').style.display = 'block';
+  } else {
+    document.getElementById('reservation-panel-sold-out').style.display = 'block';
+    document.getElementById('reservation-panel-available').style.display = 'none';
+  }
 }
 
 //Implementation of reservation cost calculation based on persons
 function calculateReservationCostAndUpdateDOM(adventure, persons) {
   // TODO: MODULE_RESERVATIONS
   // 1. Calculate the cost based on number of persons and update the reservation-cost field
-
+  document.getElementById('reservation-cost').textContent = adventure.costPerHead * persons;
 }
 
 //Implementation of reservation form submission
 function captureFormSubmit(adventure) {
-  // TODO: MODULE_RESERVATIONS
-  // 1. Capture the query details and make a POST API call using fetch() to make the reservation
-  // 2. If the reservation is successful, show an alert with "Success!" and refresh the page. If the reservation fails, just show an alert with "Failed!".
+  document.getElementById('myForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = e.target.elements.name.value;
+    const date = e.target.elements.date.value;
+    const person = e.target.elements.person.value;
+
+    fetch(config.backendEndpoint + '/reservations/new', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: name,
+        date: date,
+        person: person,
+        adventure: adventure.id
+      }),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+      .then(() => {
+        alert('Success!');
+        window.location.reload();
+      })
+      .catch(() => {
+        alert('Failed!');
+      });
+  });
 }
+
 
 //Implementation of success banner after reservation
 function showBannerIfAlreadyReserved(adventure) {
   // TODO: MODULE_RESERVATIONS
   // 1. If user has already reserved this adventure, show the reserved-banner, else don't
-
+  if (adventure.reserved) {
+    document.getElementById('reserved-banner').style.display = 'block';
+  } else {
+    document.getElementById('reserved-banner').style.display = 'none';
+  }
 }
 
 export {
