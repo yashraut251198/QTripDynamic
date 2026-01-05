@@ -48,15 +48,14 @@ This project demonstrates frontend–backend integration, dynamic UI rendering, 
 
 ## 📂 Project Structure
 
+```text
 QTripDynamic/
 ├── frontend/
-│ ├── pages/
-│ ├── conf/
-│ └── assets/
+│   ├── pages/
+│   ├── conf/
+│   └── assets/
 ├── backend/
-│ ├── routes/
-│ ├── server.js
-│ └── package.json
+│   ├── routes/
+│   ├── server.js
+│   └── package.json
 └── README.md
-
----
